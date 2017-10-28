@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 
+require "fileutils"
+
 def write_to_changelog(memo)
   write_date
   write_memo memo
@@ -17,8 +19,11 @@ def write_date
 end
 
 def check_if_wrote_today
-  today = Time.now.strftime("%Y-%m-%d").to_s
+  unless File.exist?("./pre_wrote_time_log.txt")
+    FileUtils.touch("./pre_wrote_time_log.txt")
+  end
 
+  today = Time.now.strftime("%Y-%m-%d").to_s
   File.open("./pre_wrote_time_log.txt") do |file|
     pre_date = file.read.strip
     if pre_date.empty? # first time
