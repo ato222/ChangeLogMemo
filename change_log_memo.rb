@@ -1,7 +1,6 @@
-def write_to_changelog
-  date = ARGV[1]
-  memo = ARGV[0]
+#!/usr/bin/env ruby
 
+def write_to_changelog(memo, date)
   write_date(date)
   write_memo(memo)
 end
@@ -22,4 +21,4 @@ def write_memo(memo)
   end
 end
 
-write_to_changelog
+write_to_changelog(ARGV[0], ARGV[1])
