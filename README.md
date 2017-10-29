@@ -14,9 +14,10 @@ Tool for ChangeLog Memo
 ```
 bundle install
 $EDITOR .env
+
 ./change_log_memo your_memo
-(Changelog file will be created in home directory)
 ```
+(ChangeLog file will be created in home directory)
 
 
 ## Environment
