@@ -11,7 +11,7 @@ def write_date
   return if check_if_wrote_today
 
   today = Time.now.strftime("%Y-%m-%d").to_s
-  File.open(ENV["HOME"] + "/ChangeLog", "a") do |file|
+  File.open(ENV["HOME"] + "/TestChangeLog", "a") do |file|
     file.write "\n" + today + " Foo bar <foobar@hoge.com>" + "\n"
   end
 
@@ -44,7 +44,7 @@ end
 def write_memo(memo)
   return if memo.nil?
 
-  File.open(ENV["HOME"] + "/ChangeLog", "a") do |file|
+  File.open(ENV["HOME"] + "/TestChangeLog", "a") do |file|
     file.write "\n  * " + memo + "\n"
   end
 end
