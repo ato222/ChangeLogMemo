@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
 require "fileutils"
+require "dotenv"
 
 def write_to_changelog(memo)
   write_date
@@ -11,8 +12,10 @@ def write_date
   return if check_if_wrote_today
 
   today = Time.now.strftime("%Y-%m-%d").to_s
-  File.open(ENV["HOME"] + "/TestChangeLog", "a") do |file|
-    file.write "\n" + today + " Foo bar <foobar@hoge.com>" + "\n"
+  File.open(ENV["HOME"] + "/ChangeLog", "a") do |file|
+    username = (ENV['USERNAME'].nil?) ? "FooBarBaz" : ENV['USERNAME']
+    email    = (ENV['EMAIL'].nil?) ? "foo@bar.baz" : ENV['EMAIL']
+    file.write "\n" + today + " #{username} <#{email}>" + "\n"
   end
 
   update_wrote_log
@@ -44,10 +47,10 @@ end
 def write_memo(memo)
   return if memo.nil?
 
-  File.open(ENV["HOME"] + "/TestChangeLog", "a") do |file|
+  File.open(ENV["HOME"] + "/ChangeLog", "a") do |file|
     file.write "\n  * " + memo + "\n"
   end
 end
 
-
+Dotenv.load
 write_to_changelog(ARGV[0])
