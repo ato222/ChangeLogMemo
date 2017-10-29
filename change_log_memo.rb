@@ -27,7 +27,7 @@ def check_if_wrote_today
   File.open("./pre_wrote_time_log.txt") do |file|
     pre_date = file.read.strip
     return false if pre_date.empty? # first time
-    
+
     (today == pre_date) ? true : false;
   end
 end
