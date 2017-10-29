@@ -1,9 +1,9 @@
 # ChangeLogMemo
 
-Tool for ChangeLogメモ
+Tool for ChangeLog Memo
 
 ## Inspired by
-[ChangeLogメモ](http://0xcc.net/unimag/1/)
+[ChangeLog Memo](http://0xcc.net/unimag/1/)
 
 ## Requirement
 - Ruby 2.3 or later
