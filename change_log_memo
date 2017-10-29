@@ -14,17 +14,17 @@ def write_date
   File.open(ENV["HOME"] + "/ChangeLog", "a") do |file|
     username = (ENV['USERNAME'].nil?) ? "FooBarBaz" : ENV['USERNAME']
     email    = (ENV['EMAIL'].nil?) ? "foo@bar.baz" : ENV['EMAIL']
-    file.write "\n" + today + " #{username} <#{email}>" + "\n"
+    file.write today + " #{username} <#{email}>" + "\n\n"
     update_wrote_log
   end
 end
 
 def check_if_wrote_today
-  unless File.exist?("./pre_wrote_time_log.txt") # first time
-    FileUtils.touch("./pre_wrote_time_log.txt")
+  unless File.exist?(exec_dir + "/pre_wrote_time_log.txt") # first time
+    FileUtils.touch(exec_dir + "/pre_wrote_time_log.txt")
   end
 
-  File.open("./pre_wrote_time_log.txt") do |file|
+  File.open(exec_dir + "/pre_wrote_time_log.txt") do |file|
     pre_date = file.read.strip
     return false if pre_date.empty? # first time
 
@@ -33,7 +33,7 @@ def check_if_wrote_today
 end
 
 def update_wrote_log
-  File.open("./pre_wrote_time_log.txt", "w+") do |file|
+  File.open(exec_dir + "/pre_wrote_time_log.txt", "w+") do |file|
     file.write today
   end
 end
@@ -42,7 +42,7 @@ def write_memo(memo)
   return if memo.nil?
 
   File.open(ENV["HOME"] + "/ChangeLog", "a") do |file|
-    file.write "\n  * " + memo + "\n"
+    file.write "  * " + memo + "\n\n"
   end
 end
 
@@ -50,5 +50,9 @@ def today
   Time.now.strftime("%Y-%m-%d").to_s
 end
 
-Dotenv.load
+def exec_dir
+  File.expand_path(File.dirname(__FILE__))
+end
+
+Dotenv.load(exec_dir + "/.env")
 write_to_changelog(ARGV[0])
