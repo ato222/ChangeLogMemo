@@ -6,6 +6,7 @@ require "dotenv"
 def write_to_changelog(memo)
   write_date
   write_memo memo
+  display_memo
 end
 
 def write_date
@@ -52,6 +53,11 @@ end
 
 def exec_dir
   File.expand_path(File.dirname(__FILE__))
+end
+
+def display_memo
+  memo_path = ENV["HOME"] + "/ChangeLog"
+  system('cat ' + memo_path)
 end
 
 Dotenv.load(exec_dir + "/.env")
