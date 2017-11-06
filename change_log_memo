@@ -3,62 +3,73 @@
 require "fileutils"
 require "dotenv"
 
-def write_to_changelog(memo)
-  return if memo.nil?
-  
-  write_date
-  write_memo memo
-end
+class ChangeLogMemo
+  def initialize(memo)
+    @memo = memo
+  end
 
-def write_date
-  return if check_if_wrote_today
+  def run
+    Dotenv.load(Utils.exec_dir + "/.env")
+    write_to_changelog
+    display_archive
+  end
 
-  File.open(ENV["HOME"] + "/ChangeLog", "a") do |file|
-    username = (ENV['USERNAME'].nil?) ? "FooBarBaz" : ENV['USERNAME']
-    email    = (ENV['EMAIL'].nil?) ? "foo@bar.baz" : ENV['EMAIL']
-    file.write today + " #{username} <#{email}>" + "\n\n"
-    update_wrote_log
+  def write_to_changelog
+    return if @memo.nil?
+
+    write_date
+    write_memo
+  end
+
+  def write_date
+    return if check_if_wrote_today
+
+    File.open(ENV["HOME"] + "/ChangeLog", "a") do |file|
+      username = (ENV['USERNAME'].nil?) ? "FooBarBaz" : ENV['USERNAME']
+      email    = (ENV['EMAIL'].nil?) ? "foo@bar.baz" : ENV['EMAIL']
+      file.write Utils.today + " #{username} <#{email}>" + "\n\n"
+      update_wrote_log
+    end
+  end
+
+  def check_if_wrote_today
+    unless File.exist?(Utils.exec_dir + "/pre_wrote_time_log.txt") # first time
+      FileUtils.touch(Utils.exec_dir + "/pre_wrote_time_log.txt")
+    end
+
+    File.open(Utils.exec_dir + "/pre_wrote_time_log.txt") do |file|
+      pre_date = file.read.strip
+      return false if pre_date.empty? # first time
+      (Utils.today == pre_date) ? true : false;
+    end
+  end
+
+  def update_wrote_log
+    File.open(Utils.exec_dir + "/pre_wrote_time_log.txt", "w+") do |file|
+      file.write Utils.today
+    end
+  end
+
+  def write_memo
+    File.open(ENV["HOME"] + "/ChangeLog", "a") do |file|
+      file.write "  * " + @memo + "\n\n"
+    end
+  end
+
+  def display_archive
+    memo_path = ENV["HOME"] + "/ChangeLog"
+    system('cat ' + memo_path)
   end
 end
 
-def check_if_wrote_today
-  unless File.exist?(exec_dir + "/pre_wrote_time_log.txt") # first time
-    FileUtils.touch(exec_dir + "/pre_wrote_time_log.txt")
+module Utils
+  def self.today
+    Time.now.strftime("%Y-%m-%d").to_s
   end
 
-  File.open(exec_dir + "/pre_wrote_time_log.txt") do |file|
-    pre_date = file.read.strip
-    return false if pre_date.empty? # first time
-
-    (today == pre_date) ? true : false;
+  def self.exec_dir
+    File.expand_path(File.dirname(__FILE__))
   end
 end
 
-def update_wrote_log
-  File.open(exec_dir + "/pre_wrote_time_log.txt", "w+") do |file|
-    file.write today
-  end
-end
-
-def write_memo(memo)
-  File.open(ENV["HOME"] + "/ChangeLog", "a") do |file|
-    file.write "  * " + memo + "\n\n"
-  end
-end
-
-def today
-  Time.now.strftime("%Y-%m-%d").to_s
-end
-
-def exec_dir
-  File.expand_path(File.dirname(__FILE__))
-end
-
-def display_archive
-  memo_path = ENV["HOME"] + "/ChangeLog"
-  system('cat ' + memo_path)
-end
-
-Dotenv.load(exec_dir + "/.env")
-write_to_changelog(ARGV[0])
-display_archive
+ChangeLogMemo.new(ARGV[0]).run
