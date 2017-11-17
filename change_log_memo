@@ -68,7 +68,7 @@ class ChangeLogMemo
     username = ENV['EMAIL']
     password = ENV['GOOGLE_PASSWORD']
 
-    return if password.nil?
+    return if username.nil? || password.nil?
 
     Gmail.new(username, password) do |gmail|
       gmail.deliver do
