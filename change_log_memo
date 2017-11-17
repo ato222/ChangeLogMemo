@@ -2,6 +2,7 @@
 
 require "fileutils"
 require "dotenv"
+require "gmail"
 
 class ChangeLogMemo
   def initialize(memo)
@@ -12,6 +13,7 @@ class ChangeLogMemo
     Dotenv.load(Utils.exec_dir + "/.env")
     write_to_changelog
     display_archive
+    send_archive_to_gmail
   end
 
   def write_to_changelog
@@ -29,7 +31,7 @@ class ChangeLogMemo
       email    = (ENV['EMAIL'].nil?) ? "foo@bar.baz" : ENV['EMAIL']
       file.write Utils.today + " #{username} <#{email}>" + "\n\n"
     end
-    
+
     update_wrote_log
   end
 
@@ -60,6 +62,23 @@ class ChangeLogMemo
   def display_archive
     path = ENV["HOME"] + "/ChangeLog"
     system('cat ' + path)
+  end
+
+  def send_archive_to_gmail
+    username = ENV['EMAIL']
+    password = ENV['GOOGLE_PASSWORD']
+
+    return if password.nil?
+
+    Gmail.new(username, password) do |gmail|
+      gmail.deliver do
+        to username
+        subject "ChangeLog Memo"
+        text_part do
+          body File.open(ENV["HOME"] + "/ChangeLog").read.to_utf8
+        end
+      end
+    end
   end
 end
 

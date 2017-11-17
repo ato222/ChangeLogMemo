@@ -2,12 +2,22 @@ GEM
   remote: https://rubygems.org/
   specs:
     dotenv (2.2.1)
+    gmail (0.6.0)
+      gmail_xoauth (>= 0.3.0)
+      mail (>= 2.2.1)
+    gmail_xoauth (0.4.2)
+      oauth (>= 0.3.6)
+    mail (2.7.0)
+      mini_mime (>= 0.1.1)
+    mini_mime (1.0.0)
+    oauth (0.5.3)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   dotenv
+  gmail
 
 BUNDLED WITH
    1.14.6
