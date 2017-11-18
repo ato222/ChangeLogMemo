@@ -17,7 +17,7 @@ $EDITOR .env
 
 ./change_log_memo "your_memo"
 ```
-(ChangeLog file will be created in home directory)
+(ChangeLog file will be created in the home directory.)
 
 
 ## Environment
