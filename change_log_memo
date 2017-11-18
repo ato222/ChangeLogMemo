@@ -59,7 +59,7 @@ class ChangeLogMemo
 
   def display_archive
     path = ENV["HOME"] + "/ChangeLog"
-    system('cat ' + path)
+    system('tail -n30 ' + path)
   end
 end
 
