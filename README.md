@@ -5,9 +5,6 @@ Tool for ChangeLog Memo
 ## Inspired by
 [ChangeLog Memo](http://0xcc.net/unimag/1/)
 
-## Web Version
-[ChangeLog Memo](https://changelog-memo.herokuapp.com)
-
 ## Requirement
 - Ruby 2.3 or later
 - Bundler
