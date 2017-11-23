@@ -1,6 +1,6 @@
 # ChangeLogMemo
 
-Tool for ChangeLog Memo
+A Tool for ChangeLog Memo
 
 ## Inspired by
 [ChangeLog Memo](http://0xcc.net/unimag/1/)
