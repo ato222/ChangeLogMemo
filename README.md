@@ -6,7 +6,7 @@ A Tool for ChangeLog Memo
 [ChangeLog Memo](http://0xcc.net/unimag/1/)
 
 ## Web Application
-[ChangeLog Memo](https://changelog-memo.herokuapp.com/)
+[ChangeLog Memo](https://changelog-notes.herokuapp.com/)
 
 ## Requirement
 - Ruby 2.3 or later
