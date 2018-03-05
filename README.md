@@ -3,10 +3,10 @@
 A Tool for ChangeLog Memo
 
 ## Inspired by
-[ChangeLog Memo](http://0xcc.net/unimag/1/)
+[ChangeLogメモ](http://0xcc.net/unimag/1/)
 
-## Web Application
-[ChangeLog Memo](https://changelog-memo.herokuapp.com/)
+## Web Interface Version
+[Changelog Note](https://changelog-note.herokuapp.com)
 
 ## Requirement
 - Ruby 2.3 or later
